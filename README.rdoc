@@ -1,0 +1,85 @@
+= Stripped Attributes
+
+A Rails plugin that automatically strips all ActiveRecord model attributes 
+of leading and trailing whitespace. If the attribute is blank, it strips 
+the value to +nil+.
+
+It works by overwriting ActiveRecord's +write_attribute+ method. So the 
+removal of whitespace is instantly applied and reflected in ActiveRecord's 
+dirty tracking of attributes.
+
+
+
+== Installation
+  
+You can install Stripped Attributes with the following command.
+
+  % ./script/plugin install git://github.com/m4n/stripped_attributes.git
+
+
+
+== Usage
+
+By default, all attributes are stripped:
+
+  class Post < ActiveRecord::Base
+    strip_attributes
+  end
+  
+  p = Post.new
+  p.title = "  foo \n"
+  p.title #=> "foo"
+  p.changes #=> {"title"=>[nil, "foo"]}
+  p.body = " "
+  p.body #=> nil
+  p.changes #=> {"title"=>[nil, "foo"]}
+  
+Sure, you can also control which attributes are stripped:
+
+  class Post < ActiveRecord::Base
+    strip_attributes :title, :body
+  end
+
+
+
+== Download
+
+The latest version of Stripped Attributes can be found at 
+http://github.com/m4n/stripped_attributes
+
+Documentation can be generated from its distribution directory with the 
+following command.
+
+  % [sudo] rake rdoc
+
+Tests can be executed from its distribution directory with the 
+following command.
+
+  % [sudo] rake test
+
+
+
+== Hacking
+
+Stripped Attributes is {hosted on Github}[http://github.com/m4n/stripped_attributes]. 
+Pull requests are welcome.
+
+
+
+== Bugs
+
+Please report bugs on the {Github issue tracker}[http://github.com/m4n/stripped_attributes/issues]
+for this project.
+
+
+
+== License
+
+Stripped Attributes is released under the MIT license.
+
+
+
+== Copyright
+
+Copyright (c) 2010 Martin Andert
+
